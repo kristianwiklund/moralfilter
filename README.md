@@ -1,0 +1,2 @@
+# moralfilter
+Moralfilterregler till openwrt. 
