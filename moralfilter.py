@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+from subprocess import call
+
+
 # this file does two things:
 # 1) It consumes a file with patterns suitable for use with iptables string match. 
 #    See https://www.netfilter.org/documentation/HOWTO/netfilter-extensions-HOWTO-3.html#ss3.18
@@ -11,9 +14,16 @@
 
 with open("rules.txt",'r') as f:
 	with open("iptables.sh", 'w') as o:
+		# copy the preable to the generated text
+		with open("preamble.txt",'r') as p:
+			for line in p:
+				o.write(line)
 		for x in f:
 			x = x.rstrip()
 			if not x:
 				continue
 			print >>o, "iptables  -I rstr 1 -p tcp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT --reject-with tcp-reset"
 			print >>o, "iptables  -I rstr 1 -p udp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT"
+
+		# execute the file
+		call(["/bin/sh","-f","./iptables.sh"])
