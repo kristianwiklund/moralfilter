@@ -1,3 +1,7 @@
+# don't export the rules or the generated files to github
+rules.txt
+iptables.sh
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

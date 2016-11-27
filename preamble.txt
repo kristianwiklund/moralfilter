@@ -1,0 +1,19 @@
+# create filter chains
+iptables -N moralfilter
+iptables -N mpatterns
+iptables -N mports
+
+# add filter to input chains
+iptables  -I INPUT 1  ! -i  lo -p udp --dport 53 -j moralfilter
+iptables -I forwarding_rule 1 -j moralfilter
+
+# add moralfilter rule to restrict chain
+
+iptables -A moralfilter -j mports
+
+# add string chain to moralfilter chain
+
+iptables  -A mports -p tcp -m multiport --dports 53,80,443 -j mpatterns
+iptables  -A mports  -p udp --dport 53 -j mpatterns
+
+# and the sites to block will appear below...
