@@ -1,0 +1,27 @@
+# this file can be pasted to the custom rules section in luci to block dalademokraten
+# Dalademokraten is one of the few newspapers NOT blocked in my normal firewall, so if anyone from
+# the newspaper reads this and think they should be annoyed - don't be, I needed a known good test host that
+# didn't interrupt my son's browsing :-)
+
+# create filter chains
+iptables -N moralfilter
+iptables -N mpatterns
+iptables -N mports
+
+# add filter to input chains
+iptables  -I INPUT 1  ! -i  lo -p udp --dport 53 -j moralfilter
+iptables -I forwarding_rule 1 -j moralfilter
+
+# add moralfilter rule to restrict chain
+
+iptables -A moralfilter -j mports
+
+# add string chain to moralfilter chain
+
+iptables  -A mports -p tcp -m multiport --dports 53,80,443 -j mpatterns
+iptables  -A mports  -p udp --dport 53 -j mpatterns
+
+# add a test site that we want to block
+
+iptables  -I mpatterns 1 -p tcp -m string --string "dalademokraten" --algo bm  --from 1 --to 600 -j REJECT --reject-with tcp-reset
+iptables  -I mpatterns 1 -p udp -m string --string "dalademokraten" --algo bm  --from 1 --to 600 -j REJECT
