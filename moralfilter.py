@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 from subprocess import call
+import os
 
 
 # this file does two things:
@@ -11,6 +12,9 @@ from subprocess import call
 
 # This script is intended to be used in the "custom rules" section of the openwrt firewall configuration in luci
 # Add it with full path
+
+mp=os.path.dirname(os.path.abspath(__file__))
+os.chdir(mp)
 
 with open("rules.txt",'r') as f:
 	with open("iptables.sh", 'w') as o:
@@ -26,4 +30,4 @@ with open("rules.txt",'r') as f:
 			print >>o, "iptables  -I rstr 1 -p udp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT"
 
 		# execute the file
-		call(["/bin/sh","-f","./iptables.sh"])
+		call(["/bin/sh","-f",mp+"/iptables.sh"])
