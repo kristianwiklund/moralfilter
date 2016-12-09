@@ -26,8 +26,8 @@ with open("rules.txt",'r') as f:
 			x = x.rstrip()
 			if not x:
 				continue
-			print >>o, "iptables  -I rstr 1 -p tcp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT --reject-with tcp-reset"
-			print >>o, "iptables  -I rstr 1 -p udp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT"
+			print >>o, "iptables  -I mpatterns 1 -p tcp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT --reject-with tcp-reset"
+			print >>o, "iptables  -I mpatterns 1 -p udp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT"
 
 		# execute the file
 		call(["/bin/sh","-f",mp+"/iptables.sh"])
