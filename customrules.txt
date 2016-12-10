@@ -1,5 +1,5 @@
 # add this to the openwrt "firewall - custom rules" box
 
-/usr/bin/python /home/root/moralfilter/moralfilter.py
-/bin/sh -f /usr/bin/python /home/root/moralfilter/iptables.sh
+/usr/bin/python /root/moralfilter/moralfilter.py
+/bin/sh -f /usr/bin/python /root/moralfilter/iptables.sh
 
