@@ -30,4 +30,3 @@ with open("rules.txt",'r') as f:
 			print >>o, "iptables  -I mpatterns 1 -p udp -m string --string \""+x+"\" --algo bm  --from 1 --to 600 -j REJECT"
 
 		# execute the file
-		call(["/bin/sh","-f",mp+"/iptables.sh"])
