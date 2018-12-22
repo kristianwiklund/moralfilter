@@ -1,6 +1,7 @@
 # moralfilter
-Moralfilterregler till openwrt. 
-baserat pa hur tomato hanterar dem
+
+iptables based web filter for openwrt.
+patterned after the solution in "tomato"
 
 --
 
